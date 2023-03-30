@@ -24,17 +24,21 @@ public class CustomerController {
 
     @PostMapping
     public int create(@Valid @RequestBody Customer customer){
-        return repository.create(customer);
+        Customer addedCustomer = repository.save(customer);
+        return customer.getId();
     }
 
     @PutMapping("/{id}")
     public void update(@RequestBody Customer customer, @PathVariable int id){
-        repository.update(customer,id);
+        customer.setId(id);
+        repository.save(customer);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@Valid @PathVariable int id){
-        repository.delete(id);
+        Customer customer = new Customer();
+        customer.setId(id);
+        repository.delete(customer);
     }
     
 }
